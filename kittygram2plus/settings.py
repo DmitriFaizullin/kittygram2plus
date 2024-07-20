@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
     'djoser',
     'cats.apps.CatsConfig',
 ]
@@ -128,20 +129,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated', 
+        'rest_framework.permissions.IsAuthenticated',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-}
-
-SIMPLE_JWT = {
-   'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-   'AUTH_HEADER_TYPES': ('Bearer',),
-}
-
-REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.UserRateThrottle',
         'rest_framework.throttling.ScopedRateThrottle',
@@ -160,4 +153,31 @@ REST_FRAMEWORK = {
     },
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 3,
+
 }
+
+SIMPLE_JWT = {
+   'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+   'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_THROTTLE_CLASSES': [
+#         'rest_framework.throttling.UserRateThrottle',
+#         'rest_framework.throttling.ScopedRateThrottle',
+#         # Не будем подключать класс AnonRateThrottle глобально.
+#         # Подключим его только в тех view-классах или вьюсетах,
+#         # где надо установить лимиты для анонимов
+#     ],
+    
+#     'DEFAULT_THROTTLE_RATES': {
+#         # Но сами лимиты установим, и они будут доступны из всего кода проекта
+#         'user': '10000/day', #  Лимит для UserRateThrottle
+#         'anon': '1000/day',  #  Лимит для AnonRateThrottle
+#         # Имена (ключи) для scope придумывает разработчик, 
+#         # в меру собственной фантазии
+#         'low_request': '10/minute',
+#     },
+#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+#     'PAGE_SIZE': 3,
+# }
